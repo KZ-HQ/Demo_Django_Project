@@ -1,0 +1,67 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container">
+        <div class="pt-5 pb-5">
+            <div class="media mb-2">
+                <img class="mr-3 mh-100 mw-100 border rounded"
+                     style="height: 100px; width: 100px;" src="{{ user.profile.image.url }}" alt="Profile Image">
+                <div class="media-body">
+                    <h1 class="mt-2">{{ user.username|title }}</h1>
+                    {% if user.is_superuser %}
+                        <span class="badge badge-dark">Super User</span>
+                    {% elif user.is_staff %}
+                        <span class="badge badge-warning">Staff</span>
+                    {% else %}
+                        <span class="badge badge-success">Active User</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-light" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                My Profile
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div>
+                                <h4 class="pb-2">Full Name: {{ user.first_name|title|default:"Name not provided" }} {{ user.last_name|title }}</h4>
+                                <h4 class="pb-2">Email Address: {{ user.email|default:"Email not provided" }}</h4>
+                                <h4 class="pb-2">Last Login: {{ user.last_login }}</h4>
+                                <h4 class="pb-2">Date registered: {{ user.date_joined }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-light collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Edit Profile
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <fieldset class="form-group">
+                                    <legend class="border-bottom mb-4">Update Profile</legend>
+                                    {{ u_form|crispy }}
+                                    {{ p_form|crispy }}
+                                </fieldset>
+                                <div class="form-group">
+                                    <button class="btn btn-outline-info" type="submit">Update</button>
+                                    <a class="btn btn-outline-info" href="{% url 'change-password' %}">Change Password</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

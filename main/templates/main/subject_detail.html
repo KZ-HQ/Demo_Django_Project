@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="container text-white">
+            <h2 class="display-4 mb-3">{{ subject.title }}</h2>
+            <p>{{ subject.description }}</p>
+        </div>
+    </div>
+    <div class="container my-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'main-index' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ subject.title }}</li>
+            </ol>
+        </nav>
+        <div class="row col-12">
+            {% for course in courses|dictsort:"title" %}
+                {% if course.subject == subject %}
+                    <div class="card border-light col-lg-4 pt-3">
+                        <a href="{% url 'main-course' course.pk %}" id="anchor-no-style">
+                            <div class="card-header">{{ course.title|truncatechars:"35" }}</div>
+                            <div class="card-body">
+                                <p class="card-text">{{ course.description|truncatechars:"70" }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

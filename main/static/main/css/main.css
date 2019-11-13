@@ -1,0 +1,26 @@
+.jumbotron {
+  background-color: #1089ff;
+}
+
+#anchor-no-style {
+  color: black;
+  text-decoration: none;
+}
+
+#anchor-no-style:hover {
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.card:hover .card-header {
+  color: white;
+  background-color: #1089ff;
+}
+
+.card:hover .card-body {
+  background-color: #eeeeee;
+}

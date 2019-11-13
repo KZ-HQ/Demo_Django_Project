@@ -1,0 +1,25 @@
+{% extends "main/base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4 text-white">Start Learning Today</h1>
+            <p class="lead">
+                <a class="btn btn-light btn-lg" href="#find-course" role="button">Find a Course</a>
+            </p>
+        </div>
+    </div>
+        <div class="container pb-5">
+            <div class="row col-12" id="find-course">
+                {% for subject in subjects %}
+                    <div class="card border-light col-lg-4 pt-3">
+                        <a href="{% url 'main-subjects' subject.slug %}" id="anchor-no-style">
+                            <div class="card-header">{{ subject.title }}</div>
+                            <div class="card-body">
+                                <p class="card-text">{{ subject.description|truncatechars:"100" }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}
